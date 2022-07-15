@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            $('#box').on('click',function(){
+                $.ajax({
+                    type: 'GET',
+                    url:'http://www.liulongbin.top:3006/api/getbooks',
+                    data:{
+                        id:930
+                    },
+                    success:function(res){
+                        console.log(res);
+                    }
+                })
+            });
+
+            function getcommit(){
+                $ajax({
+                    method:'GET',
+                    url:'',
+                    data:{},
+                    success:function(res){
+                        if(res !== 200) return alert('請求失敗')
+                       var rows = []
+                       $.each(res.data, function(i, item){
+                            var str = '<div></div>'
+                            rows.push(str)
+                       })
+                       $('#list').empty().append(rows.join(''))
+                    }
+                })
+            }
+            getcommit();
+
+            $(function(){
+                $('#submit').submit(function(e){
+                    e.preventDefault()
+                    var data = $(this).serialize()
+                    $.post('',{ data },function(res){
+                        if(res.status !== 201) return alert('請求失敗')
+                        getcommit()
+
+                        //$('#submit')[0] 可以通过[index]方法得到相应的DOM对象
+                        //原生form函数reset（）
+                        $('#submit')[0].reset()
+                    })
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <button id="box">post</button>
+</body>
+
+</html>

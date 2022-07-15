@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 350px;
+            height: 50px;
+            border: 1px solid red;
+            margin: 0 auto;
+        }
+
+        .box input {
+            /* display: inline-block; */
+            width: 241px;
+            height: 48px;
+            border: 0;
+            outline: none;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+
+        .box .btn {
+            float: right;
+            width: 95px;
+            height: 50px;
+            background-color: #b1191a;
+            font-size: 16px;
+            color: #fff;
+            border: 0;
+        }
+    </style>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script>
+        $(function () {
+            var time = null;
+            //定义防抖函数
+            function antishake(keyvode){
+                time = setTimeout(function(){
+                    getuserlist(keyvode)
+                },500)
+            }
+
+            $('.ipt').on('keyup',function(){
+                clearTimeout(time)
+                var keyvode = $(this).val().trim()
+                if(keyvode.length<=0){
+                    return $('.suggest-list').empty().hide()
+                }
+                // console.log(keyvode);
+                antishake(keyvode)
+            })
+            
+            function getuserlist(kw){
+                $.ajax({
+                    url:'https://suggest.taobao.com/sug?q='+kw,
+                    dataType:'jsonp',
+                    success:function(res){
+                        console.log(res);
+                        regsuggest(res)
+                    }
+                })
+            }
+
+            function regsuggest(res){
+                if(res.result.length <=0){
+                    return $('.suggest-list').empty().hide()
+                }
+                let header = template('temp',res)
+                $('.suggest-list').html(header).show()
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" placeholder="请输入" class="ipt">
+        <button class="btn">搜索</button>
+    </div>
+    <div class="suggest-list"></div>
+
+    <script type="text/html" id="temp">
+        {{each result}}
+            <div class="suggest-item">{{$value[0]}}</div>
+        {{/each}}
+    </script>
+</body>
+
+</html>

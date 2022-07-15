@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function(){
+            $('#box').on('click',function(){
+                $.post('http://www.liulongbin.top:3006/api/addbook',{ bookname: '水浒传', author:'adasd', publisher:'三国' },function(param){
+                    console.log(param);
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <button id="box">post</button>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function defaul(data){
+            let arr = []
+            for(let k in data){
+                // console.log(k);
+                // console.log(data[k]);
+                let str = k +'='+data[k]
+                arr.push(str)
+            }
+            return arr.join('&')
+        }
+        let res = defaul({ name:'zs',age:20 });
+        console.log(res);
+    </script>
+</head>
+
+<body>
+    
+</body>
+
+</html>
